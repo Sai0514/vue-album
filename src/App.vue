@@ -1,10 +1,12 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
     <router-view/>
+
+    <van-tabbar route safe-area-inset-bottom>
+      <van-tabbar-item replace to="/find" icon="browsing-history">发现</van-tabbar-item>
+      <van-tabbar-item replace to="/" icon="music">音乐</van-tabbar-item>
+      <van-tabbar-item replace to="/mine" icon="manager">我的</van-tabbar-item>
+    </van-tabbar>
   </div>
 </template>
 
