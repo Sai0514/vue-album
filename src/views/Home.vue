@@ -1,16 +1,12 @@
 <template>
-  <div class="home">
-    <van-swipe :autoplay="3000">
-      <van-swipe-item v-for="(album, index) in banners" :key="index">
-        <img width="100%" :src="album">
-      </van-swipe-item>
-    </van-swipe>
+  <div class="home" v-nodata="!albums.length">
+    <Slider />
     <ul>
       <section>最新音乐</section>
       <li v-for="(o, i) in albums" :key="i">
         <div class="album-info">
-          <p>{{o.album_name}}</p>
-          <p>{{o.singer_name}}</p>
+          <p>{{o.name}}</p>
+          <p>{{o.singers}}</p>
         </div>
         <div class="album-cover" @click="play">
           <img src="../assets/play.png" alt="">
@@ -22,27 +18,29 @@
 
 <script>
 // @ is an alias to /src
+import Slider from '@/components/xh-swiper'
+import { getAlbums } from '@/service'
 
 export default {
   name: 'home',
+  components: {
+    Slider
+  },
   data: () => ({
-    banners: [
-      "http://p1.music.126.net/svslDFxAxPPynoa6S8AGWQ==/109951164669628096.jpg?imageView&quality=89",
-      "http://p1.music.126.net/CV4sSaamtdGsZh_oXLMj8w==/109951164669991087.jpg?imageView&quality=89",
-      "http://p1.music.126.net/NBiuAtMi3KCc9A-CNzCIjw==/109951164669977544.jpg?imageView&quality=89"
-    ],
-    albums: [
-      {"album_id": "202002022020", "album_name": "十一月的肖邦",  "singer_name": "周杰伦" },
-      {"album_id": "202002022021", "album_name": "魔杰座",  "singer_name": "周杰伦" },
-      {"album_id": "202002022022", "album_name": "听妈妈的话", "singer_name": "周杰伦" },
-      {"album_id": "202002022023", "album_name": "十一月的肖邦",  "singer_name": "周杰伦" },
-      {"album_id": "202002022024", "album_name": "魔杰座",  "singer_name": "周杰伦" },
-      {"album_id": "202002022025", "album_name": "听妈妈的话", "singer_name": "周杰伦" }
-    ]
+    albums: []
   }),
+  mounted() {
+    this.request()
+  },
   methods: {
+    async request() {
+      const res = await getAlbums();
+
+      if (res.code !== '0') return;
+      this.albums = res.data;
+    },
     play() {
-      console.log('play')
+      alert('版权限制，无法播放~')
     }
   }
 }
@@ -67,14 +65,14 @@ export default {
     > li {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      font-size: 16px;
+      align-items: center; padding: 10px;
+      font-size: 16px; line-height: 30px;
       border-bottom: 1px solid #eee; 
       .album-info {
         > p {
-          font-size: 15px; line-height: 15px;
+          font-size: 16px; line-height: 18px;
           &:nth-child(2) {
-            font-size: 13px; line-height: 15px;
+            font-size: 14px; line-height: 14px;
           }
         }
       }

@@ -4,8 +4,7 @@
 
     <van-tabbar route safe-area-inset-bottom>
       <van-tabbar-item replace to="/find" icon="browsing-history">发现</van-tabbar-item>
-      <van-tabbar-item replace to="/" icon="music">音乐</van-tabbar-item>
-      <van-tabbar-item replace to="/mine" icon="manager">我的</van-tabbar-item>
+      <van-tabbar-item replace to="/" icon="music">我的</van-tabbar-item>
     </van-tabbar>
   </div>
 </template>
